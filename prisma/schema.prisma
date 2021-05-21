@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model applications {
+  id        Int         @id @default(autoincrement())
+  name      String      @db.VarChar(100)
+  token     String      @db.VarChar(50)
+  isactive  Boolean?
+  templates templates[]
+  tenants   tenants[]
+}
+
+model emails {
+  id      Int         @id @default(autoincrement())
+  template_id Int
+  toAddress String @db.VarChar(75)
+  template templates @relation(fields: [template_id], references: [id])
+}
+
+model template_categories {
+  id        Int         @id @default(autoincrement())
+  name      String      @db.VarChar(100)
+  templates templates[]
+}
+
+model templates {
+  id                   Int                  @id @default(autoincrement())
+  application_id       Int
+  name                 String               @db.VarChar(75)
+  friendlyname         String?              @db.VarChar(75)
+  fromemail            String               @db.VarChar(50)
+  subject              String               @db.VarChar(100)
+  text                 String               @db.VarChar
+  template_category_id Int?
+  tenant_id            Int?
+  description          String?              @db.VarChar(150)
+  application         applications         @relation(fields: [application_id], references: [id])
+  template_category  template_categories? @relation(fields: [template_category_id], references: [id])
+  tenant              tenants?             @relation(fields: [tenant_id], references: [id])
+  emails  emails[]
+}
+
+model tenants {
+  id             Int          @id @default(autoincrement())
+  application_id Int
+  name           String       @db.VarChar(100)
+  application   applications @relation(fields: [application_id], references: [id])
+  templates      templates[]
+}
