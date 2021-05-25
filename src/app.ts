@@ -10,8 +10,10 @@ import helmet from 'helmet';
 import { authCheck } from './middleware/authCheck';
 
 // Routes
-import { emailHistoryRouter } from './routes/emailHistoryRoutes';
 import { applicationRouter } from './routes/applicationRoutes';
+import { emailHistoryRouter } from './routes/emailHistoryRoutes';
+import { sendEmailRouter } from './routes/sendEmailRoutes';
+import { templateRouter } from './routes/templateRoutes';
 
 const debug = Debug('app');
 const app = express();
@@ -24,8 +26,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(helmet());
 
 // Routes
-app.use('/emailHistory', emailHistoryRouter);
 app.use('/application', applicationRouter);
+app.use('/emailHistory', emailHistoryRouter);
+app.use('/template', templateRouter);
+app.use('/sendEmail', sendEmailRouter);
 
 app.get('/', (req, res) => {
   res.json({ hello: 'world' });

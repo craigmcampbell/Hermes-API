@@ -16,6 +16,10 @@ Hermes is a templated email delivery system. It's a centralized place to manage 
 
 Node/Express | TypeScript | PostgreSQL | SendGrid
 
+#### Notable Packages
+
+-
+
 ## Getting Started
 
 1. Run `npm install`
@@ -48,3 +52,87 @@ npx prisma migrate deploy
 # State of migrations in the database
 npx prisma migrate status
 ```
+
+# Sending Emails
+
+## Replacement Variables
+
+When using a template that makes use of replacement variables, the standard naming convention of the variables is @VARIABLENAME.
+
+The system expects a pipe-delimited list of key/value pairs for replacement. For example:
+`@FIRST=Craig|@LAST=Campbell`.
+
+## Endpoints
+
+- [Application Endpoints](#application-endpoints)
+- [Send Email Endpoints](#send-email-endpoints)
+- [Email History Endpoints](#email-history-endpoints)
+- [Template Endpoints](#template-endpoints)
+
+### Application Endpoints
+
+Coming soon
+
+[back to endpoints](#endpoints)
+
+---
+
+### Send Email Endpoints
+
+#### Non-Templated Emails
+
+**Path:** /sendEmail
+
+**Verbs:**
+
+- POST (Email)
+
+```json
+{
+  "to": "",
+  "from": "",
+  "subject": "",
+  "text": "",
+  "html": ""
+}
+```
+
+---
+
+#### Templated Emails
+
+**Path:** /sendEmail/templated
+
+**Verbs:**
+
+- POST (Email)
+
+```json
+{
+  "applicationId": "",
+  "tenantId": "",
+  "toEmail": "",
+  "fromEmail": "",
+  "templateName": "",
+  "subjectReplacements": "",
+  "bodyReplacements": ""
+}
+```
+
+[back to endpoints](#endpoints)
+
+---
+
+### Email History Endpoints
+
+Coming soon
+
+[back to endpoints](#endpoints)
+
+---
+
+### Template Endpoints
+
+Coming soon
+
+[back to endpoints](#endpoints)
