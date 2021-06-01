@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 
 // Middleware
-import { authCheck } from './middleware/authCheck';
+import { authCheck, authorizedApplicationCheck } from './middleware/authCheck';
 
 // Routes
 import { applicationRouter } from './routes/applicationRoutes';
@@ -28,8 +28,8 @@ app.use(helmet());
 // Routes
 app.use('/application', applicationRouter);
 app.use('/emailHistory', emailHistoryRouter);
-app.use('/template', templateRouter);
-app.use('/sendEmail', sendEmailRouter);
+app.use('/template', authorizedApplicationCheck, templateRouter);
+app.use('/sendEmail', authorizedApplicationCheck, sendEmailRouter);
 
 app.get('/', (req, res) => {
   res.json({ hello: 'world' });

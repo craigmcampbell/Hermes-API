@@ -11,9 +11,9 @@ const getTemplates = async () => {
 const getTemplateByName = async (
   applicationId: number,
   name: string,
-  tenantId: number | undefined = undefined
+  tenantId: string | undefined = undefined
 ) => {
-  if (tenantId === 0) {
+  if (tenantId === undefined) {
     return await prisma.templates.findFirst({
       where: {
         application_id: applicationId,

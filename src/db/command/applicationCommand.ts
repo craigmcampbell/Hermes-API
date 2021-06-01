@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 const debug = Debug('app:applicationCommand');
 const prisma = new PrismaClient();
 
-export const addApplication = async (
+const addApplication = async (
   name: string,
   token: string,
   isactive: boolean
@@ -17,3 +17,5 @@ export const addApplication = async (
     },
   });
 };
+
+export { addApplication };

@@ -5,15 +5,16 @@ import AddTemplateDto from '../../models/AddTemplateDto';
 const debug = Debug('app:templateCommand');
 const prisma = new PrismaClient();
 
-const addTemplate = async (template: AddTemplateDto) => {
+const addTemplate = async (applicationId: number, template: AddTemplateDto) => {
   return await prisma.templates.create({
     data: {
-      application_id: template.applicationId,
+      application_id: applicationId,
       name: template.name,
       friendlyname: template.friendlyName,
       fromemail: template.fromEmail,
       subject: template.subject,
       text: template.text,
+      textPlain: template.textPlain,
       template_category_id: template.templateCategoryId,
       tenant_id: template.tenantId,
       description: template.description,

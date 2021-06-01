@@ -15,7 +15,9 @@ const post = async (req: Request, res: Response) => {
   try {
     const template = req.body as AddTemplateDto;
 
-    const newTemplate = await addTemplate(template);
+    const applicationId = res.locals.applicationId;
+
+    const newTemplate = await addTemplate(applicationId, template);
 
     res.json(buildSuccessResponse(newTemplate));
   } catch (error) {
@@ -23,7 +25,7 @@ const post = async (req: Request, res: Response) => {
     res.send(
       buildErrorResponse(
         '400',
-        'Send Email Error',
+        'Template Error',
         error,
         'templateController',
         ''

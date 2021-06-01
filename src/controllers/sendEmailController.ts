@@ -1,10 +1,7 @@
 import { Request, Response } from 'express';
 import Debug from 'debug';
-import {
-  sendTemplatedEmail,
-  sendNonTemplatedEmail,
-} from '../services/sendGridService';
-import Email from '../models/Email';
+import { sendEmailFromTemplate } from '../services/sendTemplatedEmailService';
+import { sendEmailNoTemplate } from '../services/sendNonTemplatedEmailService';
 import TemplatedEmailDto from '../models/TemplatedEmailDto';
 
 import {
@@ -18,9 +15,11 @@ export const templatedEmailPost = async (req: Request, res: Response) => {
   try {
     const dto = req.body as TemplatedEmailDto;
 
-    await sendTemplatedEmail(dto);
+    const applicationId = res.locals.applicationId;
 
-    res.status(200).end();
+    const savedEmail = await sendEmailFromTemplate(applicationId, dto);
+
+    res.status(200).json({ id: savedEmail.id, sent: savedEmail.sent });
   } catch (error) {
     debug(error);
     res.send(
@@ -37,11 +36,13 @@ export const templatedEmailPost = async (req: Request, res: Response) => {
 
 export const nonTemplatedEmailPost = async (req: Request, res: Response) => {
   try {
-    const email = req.body as Email;
+    const dto = req.body as TemplatedEmailDto;
 
-    await sendNonTemplatedEmail(email);
+    const applicationId = res.locals.applicationId;
 
-    res.status(200).end();
+    const savedEmail = await sendEmailNoTemplate(applicationId, dto);
+
+    res.status(200).json({ id: savedEmail.id, sent: savedEmail.sent });
   } catch (error) {
     res.send(
       buildErrorResponse(
