@@ -1,5 +1,5 @@
 import Debug from 'debug';
-import { PrismaClient, templates } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import AddTemplateDto from '../../interfaces/AddTemplateDto';
 import EditTemplateDto from '../../interfaces/EditTemplateDto';
 

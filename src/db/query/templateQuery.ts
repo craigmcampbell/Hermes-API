@@ -5,14 +5,17 @@ import PagedTemplateListDto from '../../models/PagedTemplateListDto';
 const debug = Debug('app:templateQuery');
 const prisma = new PrismaClient();
 
-const getTemplatesByApplication = async (applicationId: number) => {
+const getTemplatesByApplication = async (
+  applicationId: number,
+  sortByColumn: string
+) => {
   return await prisma.templates.findMany({
     where: {
       application_id: applicationId,
     },
     orderBy: [
       {
-        name: 'asc',
+        [sortByColumn]: 'asc',
       },
     ],
   });

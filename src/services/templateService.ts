@@ -47,7 +47,7 @@ const getTemplates = async (
 };
 
 async function getAllTemplates(applicationId: number) {
-  return await getTemplatesByApplication(applicationId);
+  return await getTemplatesByApplication(applicationId, 'name');
 }
 
 async function filterByName(applicationId: number, nameFilter: string) {

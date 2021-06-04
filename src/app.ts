@@ -26,8 +26,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(helmet());
 
 // Routes
-app.use('/application', applicationRouter);
-app.use('/emailHistory', emailHistoryRouter);
+app.use('/application', authCheck, applicationRouter);
+app.use('/emailHistory', authCheck, emailHistoryRouter);
 app.use('/template', authorizedApplicationCheck, templateRouter);
 app.use('/sendEmail', authorizedApplicationCheck, sendEmailRouter);
 

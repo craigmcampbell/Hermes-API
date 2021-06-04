@@ -1,5 +1,6 @@
 import Debug from 'debug';
 import { PrismaClient } from '@prisma/client';
+import EditApplicationDto from '../../interfaces/EditApplicationDto';
 
 const debug = Debug('app:applicationCommand');
 const prisma = new PrismaClient();
@@ -18,4 +19,17 @@ const addApplication = async (
   });
 };
 
-export { addApplication };
+const updateApplication = async (application: EditApplicationDto) => {
+  return await prisma.applications.update({
+    where: {
+      id: application.id,
+    },
+    data: {
+      name: application.name,
+      token: application.token,
+      isactive: application.isActive,
+    },
+  });
+};
+
+export { addApplication, updateApplication };
